@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>趣味扫雷 - LitePlay Hub</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-header">
+            <h1>趣味扫雷</h1>
+            <div class="controls">
+                <div class="difficulty">
+                    <label for="difficulty">难度:</label>
+                    <select id="difficulty">
+                        <option value="easy">简单 (9x9, 10颗雷)</option>
+                        <option value="medium" selected>中等 (16x16, 40颗雷)</option>
+                        <option value="hard">困难 (30x16, 99颗雷)</option>
+                    </select>
+                </div>
+                <button id="new-game-btn">新游戏</button>
+            </div>
+            <div class="stats">
+                <div class="mines-left">
+                    <span>剩余雷数: </span>
+                    <span id="mines-count">40</span>
+                </div>
+                <div class="timer">
+                    <span>用时: </span>
+                    <span id="timer">0</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="game-board" id="game-board"></div>
+        
+        <div class="game-footer">
+            <div class="instructions">
+                <h3>游戏说明</h3>
+                <p>左键点击: 揭开方块</p>
+                <p>右键点击: 标记地雷</p>
+                <p>双击已揭开的数字: 快速揭开周围方块</p>
+            </div>
+        </div>
+    </div>
+    
+    <div id="game-result" class="modal">
+        <div class="modal-content">
+            <h2 id="result-message">游戏结束</h2>
+            <p>用时: <span id="final-time">0</span> 秒</p>
+            <button id="play-again-btn">再玩一次</button>
+        </div>
+    </div>
+    
+    <script src="minesweeper.js"></script>
+</body>
+</html> 

@@ -1,0 +1,216 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.game-container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 800px;
+    width: 100%;
+}
+
+.game-header {
+    margin-bottom: 20px;
+}
+
+.game-header h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.difficulty {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+select {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+button {
+    padding: 8px 15px;
+    background-color: #3B82F6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #2563EB;
+}
+
+.stats {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #f8f8f8;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.game-board {
+    display: grid;
+    grid-template-columns: repeat(16, 30px);
+    grid-template-rows: repeat(16, 30px);
+    gap: 1px;
+    margin: 0 auto;
+    background-color: #bbb;
+    border: 2px solid #777;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.cell {
+    width: 30px;
+    height: 30px;
+    background-color: #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+}
+
+.cell:hover {
+    background-color: #ddd;
+}
+
+.cell.revealed {
+    background-color: #eee;
+}
+
+.cell.flagged::after {
+    content: '🚩';
+}
+
+.cell.mine {
+    background-color: #ff6b6b;
+}
+
+.cell.mine::after {
+    content: '💣';
+}
+
+.cell.number-1 { color: blue; }
+.cell.number-2 { color: green; }
+.cell.number-3 { color: red; }
+.cell.number-4 { color: darkblue; }
+.cell.number-5 { color: darkred; }
+.cell.number-6 { color: teal; }
+.cell.number-7 { color: black; }
+.cell.number-8 { color: gray; }
+
+.game-footer {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.instructions {
+    background-color: #f8f8f8;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.instructions h3 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.instructions p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+}
+
+.modal-content h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.modal-content p {
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .game-board {
+        grid-template-columns: repeat(16, 25px);
+        grid-template-rows: repeat(16, 25px);
+    }
+    
+    .cell {
+        width: 25px;
+        height: 25px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .controls {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .game-board {
+        grid-template-columns: repeat(16, 20px);
+        grid-template-rows: repeat(16, 20px);
+    }
+    
+    .cell {
+        width: 20px;
+        height: 20px;
+        font-size: 12px;
+    }
+} 
