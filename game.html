@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>游戏加载中... - LitePlay Hub</title>
+    <title>Play Game - LitePlay Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
@@ -27,233 +27,140 @@
         }
         .game-frame {
             width: 100%;
-            height: calc(100vh - 120px);
+            height: calc(100vh - 250px);
             min-height: 500px;
-            background-color: #f9fafb;
-        }
-        .dark .game-frame {
-            background-color: #1f2937;
-        }
-        .control-bar {
-            transition: opacity 0.3s;
-        }
-        .control-bar:hover {
-            opacity: 1 !important;
+            border: none;
         }
     </style>
 </head>
 <body class="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 min-h-screen">
-    <div class="container mx-auto px-4 py-4 max-w-7xl">
-        <!-- Game Header Info -->
-        <div class="p-4 flex justify-between items-center border-b border-gray-200 dark:border-gray-700">
-            <div class="flex items-center">
-                <a href="index.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary mr-4">
-                    <i class="fas fa-arrow-left"></i>
-                    <span class="ml-2">Back to Home</span>
+    <div class="container mx-auto px-4 py-6 max-w-7xl">
+        <!-- Navigation Bar -->
+        <nav class="flex flex-col md:flex-row justify-between items-center py-4 border-b border-gray-200 dark:border-gray-700 mb-6">
+            <div class="flex items-center mb-4 md:mb-0">
+                <a href="index.html" class="text-primary text-2xl font-bold flex items-center">
+                    <i class="fas fa-gamepad mr-2"></i>
+                    <span>LitePlay Hub</span>
+                    <span class="text-sm text-gray-500 dark:text-gray-400 ml-2">Web Games</span>
                 </a>
-                <h1 id="game-title" class="text-xl font-bold">加载中...</h1>
-                <span id="game-category" class="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 text-xs px-2 py-1 rounded-full ml-3">...</span>
-            </div>
-            <div class="flex items-center">
-                <button id="theme-toggle" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary p-2">
-                    <i class="fas fa-moon"></i>
-                </button>
-            </div>
-        </div>
-        
-        <!-- Game Area -->
-        <div class="relative">
-            <!-- Loading Indicator -->
-            <div id="loading" class="absolute inset-0 flex flex-col items-center justify-center bg-white dark:bg-gray-800 z-10">
-                <div class="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mb-4"></div>
-                <p class="text-lg">Loading game...</p>
             </div>
             
-            <!-- Game iframe -->
-            <div id="game-container" class="game-frame">
-                <!-- 游戏将通过iframe动态加载 -->
-                <iframe id="game-iframe" class="w-full h-full border-0" frameborder="0" allowfullscreen></iframe>
-            </div>
-            
-            <!-- Game Control Bar -->
-            <div class="control-bar absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 dark:bg-opacity-70 text-white p-3 flex justify-between items-center opacity-80">
-                <div class="flex items-center space-x-4">
-                    <button id="fullscreen-btn" class="hover:text-primary transition">
-                        <i class="fas fa-expand"></i>
-                        <span class="ml-1 hidden sm:inline">Fullscreen</span>
-                    </button>
-                    <button id="sound-btn" class="hover:text-primary transition">
-                        <i class="fas fa-volume-up"></i>
-                        <span class="ml-1 hidden sm:inline">Sound</span>
-                    </button>
-                    <button id="restart-btn" class="hover:text-primary transition">
-                        <i class="fas fa-redo"></i>
-                        <span class="ml-1 hidden sm:inline">Restart</span>
-                    </button>
+            <div class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4 w-full md:w-auto">
+                <!-- Search Box -->
+                <div class="relative w-full md:w-64">
+                    <input id="search-input" type="text" placeholder="Search games..." class="w-full pl-10 pr-4 py-2 rounded-full bg-gray-100 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary">
+                    <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
                 </div>
-                <div class="flex items-center space-x-4">
-                    <button id="favorite-btn" class="hover:text-red-400 transition">
-                        <i class="far fa-heart"></i>
-                        <span class="ml-1 hidden sm:inline">Favorite</span>
-                    </button>
-                    <a href="index.html" class="hover:text-primary transition">
-                        <i class="fas fa-times"></i>
-                        <span class="ml-1 hidden sm:inline">Exit Game</span>
+                
+                <!-- Navigation Links -->
+                <div class="flex space-x-4">
+                    <a href="categories.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary">
+                        <i class="fas fa-th-large mr-1"></i>
+                        <span>Categories</span>
                     </a>
+                    <a href="recent.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary">
+                        <i class="fas fa-history mr-1"></i>
+                        <span>Recent</span>
+                    </a>
+                    <a href="favorites.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary">
+                        <i class="fas fa-heart mr-1"></i>
+                        <span>Favorites</span>
+                    </a>
+                    <button id="theme-toggle" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary">
+                        <i class="fas fa-moon"></i>
+                    </button>
                 </div>
             </div>
-        </div>
+        </nav>
+        
+        <!-- Main Content -->
+        <main>
+            <!-- Game Header -->
+            <div class="mb-6">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
+                    <div>
+                        <h1 id="game-title" class="text-2xl font-bold">Loading Game...</h1>
+                        <p id="game-category" class="text-gray-600 dark:text-gray-400 mt-1"></p>
+                    </div>
+                    
+                    <div class="flex space-x-2 mt-4 md:mt-0">
+                        <button id="favorite-btn" class="flex items-center px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600">
+                            <i class="far fa-heart mr-2"></i>
+                            <span>Add to Favorites</span>
+                        </button>
+                        <button id="fullscreen-btn" class="flex items-center px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600">
+                            <i class="fas fa-expand mr-2"></i>
+                            <span>Fullscreen</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Game Frame -->
+            <div class="bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-lg mb-8">
+                <div id="game-container" class="relative">
+                    <div id="loading-overlay" class="absolute inset-0 flex flex-col items-center justify-center bg-white dark:bg-gray-900 z-10">
+                        <div class="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mb-4"></div>
+                        <p class="text-lg">Loading Game...</p>
+                    </div>
+                    <iframe id="game-frame" class="game-frame" title="Game Frame"></iframe>
+                </div>
+            </div>
+            
+            <!-- Game Info -->
+            <div class="bg-white dark:bg-gray-700 rounded-lg p-6 mb-8 shadow-md">
+                <h2 class="text-xl font-bold mb-4">Game Information</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="font-semibold mb-2">Description</h3>
+                        <p id="game-description" class="text-gray-600 dark:text-gray-300">Loading...</p>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold mb-2">Stats</h3>
+                        <div class="space-y-2">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600 dark:text-gray-400">Category:</span>
+                                <span id="game-category-stats" class="font-medium"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600 dark:text-gray-400">Times Played:</span>
+                                <span id="game-plays" class="font-medium">0</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600 dark:text-gray-400">Last Played:</span>
+                                <span id="game-last-played" class="font-medium">Never</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Similar Games -->
+            <div class="mb-8">
+                <h2 class="text-xl font-bold mb-4">Similar Games</h2>
+                <div id="similar-games" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Similar game cards will be dynamically generated by JavaScript -->
+                    <div class="col-span-full text-center py-10" id="similar-loading">
+                        <div class="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                        <p class="text-lg">Loading...</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Footer -->
+        <footer class="mt-12 pt-6 border-t border-gray-200 dark:border-gray-700 text-center text-gray-500 dark:text-gray-400 text-sm">
+            <div class="mb-4">
+                <a href="#" class="mx-2 hover:text-primary">About Us</a>
+                <a href="#" class="mx-2 hover:text-primary">Feedback</a>
+                <a href="#" class="mx-2 hover:text-primary">Privacy Policy</a>
+            </div>
+            <p>© 2024 LitePlay Hub - Web games platform, no registration required</p>
+        </footer>
     </div>
 
     <!-- JavaScript -->
     <script>
-        // 从URL获取游戏ID
-        const urlParams = new URLSearchParams(window.location.search);
-        const gameId = urlParams.get('id') || '2048'; // 默认为2048游戏
-        
-        // 从game_config.json加载游戏配置
-        async function loadGameConfig() {
-            try {
-                let data;
-                try {
-                    // 尝试使用fetch API (适用于HTTP服务器环境)
-                    const response = await fetch('game_config.json');
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! Status: ${response.status}`);
-                    }
-                    data = await response.json();
-                } catch (fetchError) {
-                    console.warn('Fetch API失败，尝试使用XMLHttpRequest (适用于本地文件系统):', fetchError);
-                    
-                    // 备用方案：使用同步XMLHttpRequest (适用于本地文件系统)
-                    try {
-                        const xhr = new XMLHttpRequest();
-                        xhr.open('GET', 'game_config.json', false); // 同步请求
-                        xhr.send(null);
-                        
-                        if (xhr.status === 200) {
-                            data = JSON.parse(xhr.responseText);
-                        } else {
-                            throw new Error(`XHR error! Status: ${xhr.status}`);
-                        }
-                    } catch (xhrError) {
-                        console.warn('XMLHttpRequest也失败，使用内联的默认游戏数据:', xhrError);
-                        
-                        // 备用方案：使用内联的默认游戏数据
-                        data = {
-                            "games": [
-                                {
-                                    "id": "2048",
-                                    "title": "2048 Number Blocks",
-                                    "description": "合并数字方块，达到2048！",
-                                    "category": "Number",
-                                    "thumbnail": "images/games/2048.jpg",
-                                    "url": "games/2048/index.html",
-                                    "featured": true,
-                                    "popular": true
-                                },
-                                {
-                                    "id": "snake",
-                                    "title": "Snake Game",
-                                    "description": "控制蛇吃食物并成长",
-                                    "category": "Arcade",
-                                    "thumbnail": "images/games/snake.jpg",
-                                    "url": "games/snake/index.html",
-                                    "featured": true,
-                                    "popular": false
-                                },
-                                {
-                                    "id": "entangolf",
-                                    "title": "Entangolf",
-                                    "description": "有趣的高尔夫游戏",
-                                    "category": "Sports",
-                                    "thumbnail": "images/games/entangolf.jpg",
-                                    "url": "games/entangolf/index.html",
-                                    "featured": false,
-                                    "popular": true
-                                },
-                                {
-                                    "id": "minesweeper",
-                                    "title": "趣味扫雷",
-                                    "description": "经典的扫雷游戏，考验你的逻辑思维和推理能力",
-                                    "category": "Strategy",
-                                    "thumbnail": "images/games/minesweeper.jpg",
-                                    "url": "games/minesweeper/index.html",
-                                    "featured": false,
-                                    "popular": false
-                                }
-                            ]
-                        };
-                    }
-                }
-                return data;
-            } catch (error) {
-                console.error('加载游戏配置失败:', error);
-                document.getElementById('loading').innerHTML = `
-                    <div class="text-red-500 text-center p-4">
-                        <i class="fas fa-exclamation-triangle text-4xl mb-2"></i>
-                        <p>加载游戏配置失败</p>
-                        <p class="text-sm mt-2">${error.message}</p>
-                        <a href="index.html" class="mt-4 inline-block bg-primary text-white px-4 py-2 rounded">返回首页</a>
-                    </div>
-                `;
-                return null;
-            }
-        }
-        
-        // 加载并显示游戏
-        async function initGame() {
-            const config = await loadGameConfig();
-            if (!config) return;
-            
-            const game = config.games.find(g => g.id === gameId);
-            
-            if (!game) {
-                document.getElementById('loading').innerHTML = `
-                    <div class="text-red-500 text-center p-4">
-                        <i class="fas fa-exclamation-triangle text-4xl mb-2"></i>
-                        <p>未找到游戏</p>
-                        <a href="index.html" class="mt-4 inline-block bg-primary text-white px-4 py-2 rounded">返回首页</a>
-                    </div>
-                `;
-                return;
-            }
-            
-            // 更新页面标题和游戏信息
-            document.title = `${game.title} - LitePlay Hub`;
-            document.getElementById('game-title').textContent = game.title;
-            document.getElementById('game-category').textContent = game.category;
-            
-            // 设置iframe源
-            const iframe = document.getElementById('game-iframe');
-            iframe.src = game.url;
-            
-            // 监听iframe加载完成
-            iframe.onload = function() {
-                document.getElementById('loading').style.display = 'none';
-            };
-            
-            // 监听iframe加载错误
-            iframe.onerror = function() {
-                document.getElementById('loading').innerHTML = `
-                    <div class="text-red-500 text-center p-4">
-                        <i class="fas fa-exclamation-triangle text-4xl mb-2"></i>
-                        <p>游戏加载失败</p>
-                        <p class="text-sm mt-2">无法加载游戏: ${game.title}</p>
-                        <a href="index.html" class="mt-4 inline-block bg-primary text-white px-4 py-2 rounded">返回首页</a>
-                    </div>
-                `;
-            };
-            
-            // 如果iframe加载超时（10秒），也隐藏加载动画
-            setTimeout(() => {
-                document.getElementById('loading').style.display = 'none';
-            }, 10000);
-        }
-        
-        // 初始化游戏
-        initGame();
-        
         // Theme toggle
         const themeToggleBtn = document.getElementById('theme-toggle');
         const htmlElement = document.documentElement;
@@ -276,86 +183,399 @@
             htmlElement.classList.remove('dark');
             themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
         }
+
+        // Game data
+        let games = [];
+        let currentGame = null;
         
-        // Fullscreen button
-        const fullscreenBtn = document.getElementById('fullscreen-btn');
-        const gameContainer = document.getElementById('game-container');
+        // Get category color
+        function getCategoryColor(category) {
+            const colorMap = {
+                'Number': 'green',
+                'Puzzle': 'blue',
+                'Arcade': 'yellow',
+                'Strategy': 'purple',
+                'Sports': 'orange',
+                'Action': 'red',
+                'Casual': 'yellow',
+                'Shooter': 'red',
+                'Logic': 'indigo'
+            };
+            
+            return colorMap[category] || 'gray';
+        }
         
-        fullscreenBtn.addEventListener('click', function() {
-            if (!document.fullscreenElement) {
-                gameContainer.requestFullscreen().catch(err => {
-                    alert(`Fullscreen error: ${err.message}`);
-                });
-                fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i><span class="ml-1 hidden sm:inline">Exit Fullscreen</span>';
+        // Create game card
+        function createGameCard(game) {
+            const color = getCategoryColor(game.category);
+            
+            return `
+            <div class="game-card bg-white dark:bg-gray-700 rounded-lg overflow-hidden shadow-md">
+                <img src="${game.thumbnail}" alt="${game.title}" class="w-full h-40 object-cover">
+                <div class="p-4">
+                    <div class="flex justify-between items-start">
+                        <h3 class="font-semibold text-lg">${game.title}</h3>
+                        <span class="bg-${color}-100 text-${color}-800 dark:bg-${color}-900 dark:text-${color}-200 text-xs px-2 py-1 rounded-full">${game.category}</span>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm mt-2">${game.description}</p>
+                    <div class="mt-4 flex justify-between items-center">
+                        <a href="game.html?id=${game.id}" class="bg-primary hover:bg-blue-600 text-white px-4 py-2 rounded-md text-sm">Play Now</a>
+                        <button class="favorite-btn text-gray-400 hover:text-red-500 dark:hover:text-red-400" data-id="${game.id}">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            `;
+        }
+        
+        // Format date
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const yesterday = new Date(now);
+            yesterday.setDate(yesterday.getDate() - 1);
+            
+            if (date.toDateString() === now.toDateString()) {
+                return 'Today';
+            } else if (date.toDateString() === yesterday.toDateString()) {
+                return 'Yesterday';
             } else {
-                document.exitFullscreen();
-                fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i><span class="ml-1 hidden sm:inline">Fullscreen</span>';
-            }
-        });
-        
-        // Sound button
-        const soundBtn = document.getElementById('sound-btn');
-        let soundOn = true;
-        
-        soundBtn.addEventListener('click', function() {
-            soundOn = !soundOn;
-            if (soundOn) {
-                soundBtn.innerHTML = '<i class="fas fa-volume-up"></i><span class="ml-1 hidden sm:inline">Sound</span>';
-                // 这里可以添加控制iframe中游戏声音的代码，但需要游戏支持postMessage API
-            } else {
-                soundBtn.innerHTML = '<i class="fas fa-volume-mute"></i><span class="ml-1 hidden sm:inline">Sound</span>';
-                // 这里可以添加控制iframe中游戏声音的代码，但需要游戏支持postMessage API
-            }
-        });
-        
-        // Favorite button
-        const favoriteBtn = document.getElementById('favorite-btn');
-        let isFavorite = false;
-        
-        favoriteBtn.addEventListener('click', function() {
-            isFavorite = !isFavorite;
-            if (isFavorite) {
-                favoriteBtn.innerHTML = '<i class="fas fa-heart"></i><span class="ml-1 hidden sm:inline">Favorited</span>';
-                favoriteBtn.classList.add('text-red-500');
-                
-                // 保存收藏到本地存储
-                const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-                if (!favorites.includes(gameId)) {
-                    favorites.push(gameId);
-                    localStorage.setItem('favorites', JSON.stringify(favorites));
-                }
-            } else {
-                favoriteBtn.innerHTML = '<i class="far fa-heart"></i><span class="ml-1 hidden sm:inline">Favorite</span>';
-                favoriteBtn.classList.remove('text-red-500');
-                
-                // 从本地存储中移除收藏
-                const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-                const index = favorites.indexOf(gameId);
-                if (index > -1) {
-                    favorites.splice(index, 1);
-                    localStorage.setItem('favorites', JSON.stringify(favorites));
-                }
-            }
-        });
-        
-        // 检查游戏是否已收藏
-        function checkFavoriteStatus() {
-            const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-            if (favorites.includes(gameId)) {
-                isFavorite = true;
-                favoriteBtn.innerHTML = '<i class="fas fa-heart"></i><span class="ml-1 hidden sm:inline">Favorited</span>';
-                favoriteBtn.classList.add('text-red-500');
+                return date.toLocaleDateString();
             }
         }
         
-        // 页面加载完成后检查收藏状态
-        window.addEventListener('DOMContentLoaded', checkFavoriteStatus);
+        // Load game by ID
+        function loadGame(gameId) {
+            currentGame = games.find(game => game.id === gameId);
+            
+            if (!currentGame) {
+                document.getElementById('game-title').textContent = 'Game Not Found';
+                document.getElementById('loading-overlay').innerHTML = `
+                    <div class="text-red-500 text-center p-4">
+                        <i class="fas fa-exclamation-triangle text-4xl mb-2"></i>
+                        <p>Game not found</p>
+                        <p class="text-sm mt-2">The requested game does not exist</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Update page title
+            document.title = `${currentGame.title} - LitePlay Hub`;
+            
+            // Update game info
+            document.getElementById('game-title').textContent = currentGame.title;
+            document.getElementById('game-category').textContent = currentGame.category;
+            document.getElementById('game-category-stats').textContent = currentGame.category;
+            document.getElementById('game-description').textContent = currentGame.description;
+            
+            // Update game stats
+            const gameStatsKey = `gameStats_${gameId}`;
+            const gameStats = JSON.parse(localStorage.getItem(gameStatsKey) || '{"playCount": 0, "lastPlayed": null}');
+            
+            document.getElementById('game-plays').textContent = gameStats.playCount || 0;
+            
+            if (gameStats.lastPlayed) {
+                document.getElementById('game-last-played').textContent = formatDate(gameStats.lastPlayed);
+            } else {
+                document.getElementById('game-last-played').textContent = 'Never';
+            }
+            
+            // Load game in iframe
+            const gameFrame = document.getElementById('game-frame');
+            gameFrame.src = currentGame.url;
+            
+            // Hide loading overlay when game is loaded
+            gameFrame.onload = function() {
+                document.getElementById('loading-overlay').style.display = 'none';
+                
+                // Record game play
+                recordGamePlay(gameId);
+            };
+            
+            // Check if game is favorited
+            checkFavoriteStatus(gameId);
+            
+            // Load similar games
+            loadSimilarGames(currentGame.category, gameId);
+        }
         
-        // 重启游戏按钮
-        document.getElementById('restart-btn').addEventListener('click', function() {
-            const iframe = document.getElementById('game-iframe');
-            iframe.src = iframe.src;
-            document.getElementById('loading').style.display = 'flex';
+        // Check favorite status
+        function checkFavoriteStatus(gameId) {
+            const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+            const favoriteBtn = document.getElementById('favorite-btn');
+            
+            if (favorites.includes(gameId)) {
+                favoriteBtn.innerHTML = '<i class="fas fa-heart text-red-500 mr-2"></i><span>Remove from Favorites</span>';
+                favoriteBtn.classList.add('favorited');
+            } else {
+                favoriteBtn.innerHTML = '<i class="far fa-heart mr-2"></i><span>Add to Favorites</span>';
+                favoriteBtn.classList.remove('favorited');
+            }
+        }
+        
+        // Toggle favorite status
+        function toggleFavorite(gameId) {
+            const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+            const favoriteBtn = document.getElementById('favorite-btn');
+            const index = favorites.indexOf(gameId);
+            
+            if (index === -1) {
+                // Add to favorites
+                favorites.push(gameId);
+                favoriteBtn.innerHTML = '<i class="fas fa-heart text-red-500 mr-2"></i><span>Remove from Favorites</span>';
+                favoriteBtn.classList.add('favorited');
+            } else {
+                // Remove from favorites
+                favorites.splice(index, 1);
+                favoriteBtn.innerHTML = '<i class="far fa-heart mr-2"></i><span>Add to Favorites</span>';
+                favoriteBtn.classList.remove('favorited');
+            }
+            
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+        }
+        
+        // Record game play
+        function recordGamePlay(gameId) {
+            // Get and increment play count
+            const gameStatsKey = `gameStats_${gameId}`;
+            const gameStats = JSON.parse(localStorage.getItem(gameStatsKey) || '{"playCount": 0}');
+            gameStats.playCount++;
+            gameStats.lastPlayed = new Date().toISOString();
+            localStorage.setItem(gameStatsKey, JSON.stringify(gameStats));
+            
+            // Update stats display
+            document.getElementById('game-plays').textContent = gameStats.playCount;
+            document.getElementById('game-last-played').textContent = 'Today';
+            
+            // Add to recently played
+            let recentGames = JSON.parse(localStorage.getItem('recentlyPlayed') || '[]');
+            
+            // If already exists, remove old record
+            recentGames = recentGames.filter(game => game.id !== gameId);
+            
+            // Add to beginning
+            recentGames.unshift({
+                id: gameId,
+                title: currentGame.title,
+                timestamp: new Date().toISOString(),
+                playCount: gameStats.playCount
+            });
+            
+            // Limit recent games count
+            if (recentGames.length > 10) {
+                recentGames = recentGames.slice(0, 10);
+            }
+            
+            localStorage.setItem('recentlyPlayed', JSON.stringify(recentGames));
+        }
+        
+        // Load similar games
+        function loadSimilarGames(category, currentGameId) {
+            const similarGamesContainer = document.getElementById('similar-games');
+            
+            // Find games with the same category
+            const similarGames = games.filter(game => game.category === category && game.id !== currentGameId);
+            
+            if (similarGames.length === 0) {
+                similarGamesContainer.innerHTML = '<div class="col-span-full text-center py-10"><p class="text-lg text-gray-500 dark:text-gray-400">No similar games found</p></div>';
+                return;
+            }
+            
+            // Shuffle and take up to 4 games
+            const shuffled = [...similarGames].sort(() => 0.5 - Math.random());
+            const selected = shuffled.slice(0, 4);
+            
+            let html = '';
+            selected.forEach(game => {
+                html += createGameCard(game);
+            });
+            
+            similarGamesContainer.innerHTML = html;
+            
+            // Bind favorite button events
+            document.querySelectorAll('.favorite-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const gameId = this.getAttribute('data-id');
+                    toggleFavorite(gameId, this);
+                });
+                
+                // Check if already favorited
+                const gameId = btn.getAttribute('data-id');
+                const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+                if (favorites.includes(gameId)) {
+                    btn.innerHTML = '<i class="fas fa-heart"></i>';
+                    btn.classList.add('text-red-500');
+                }
+            });
+        }
+        
+        // Setup search functionality
+        function setupSearch() {
+            const searchInput = document.getElementById('search-input');
+            
+            searchInput.addEventListener('keyup', function(event) {
+                // If Enter key is pressed
+                if (event.key === 'Enter') {
+                    const query = searchInput.value.trim().toLowerCase();
+                    if (query) {
+                        window.location.href = `categories.html?search=${encodeURIComponent(query)}`;
+                    }
+                }
+            });
+        }
+        
+        // Fullscreen functionality
+        function setupFullscreen() {
+            const fullscreenBtn = document.getElementById('fullscreen-btn');
+            const gameFrame = document.getElementById('game-frame');
+            
+            fullscreenBtn.addEventListener('click', function() {
+                if (gameFrame.requestFullscreen) {
+                    gameFrame.requestFullscreen();
+                } else if (gameFrame.webkitRequestFullscreen) { /* Safari */
+                    gameFrame.webkitRequestFullscreen();
+                } else if (gameFrame.msRequestFullscreen) { /* IE11 */
+                    gameFrame.msRequestFullscreen();
+                }
+            });
+        }
+        
+        // Load game config
+        async function loadGameConfig() {
+            try {
+                let data;
+                try {
+                    // Try using fetch API (for HTTP server environment)
+                    const response = await fetch('game_config.json');
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    data = await response.json();
+                } catch (fetchError) {
+                    console.warn('Fetch API failed, trying XMLHttpRequest (for local file system):', fetchError);
+                    
+                    // Fallback: use synchronous XMLHttpRequest (for local file system)
+                    try {
+                        const xhr = new XMLHttpRequest();
+                        xhr.open('GET', 'game_config.json', false); // Synchronous request
+                        xhr.send(null);
+                        
+                        if (xhr.status === 200) {
+                            data = JSON.parse(xhr.responseText);
+                        } else {
+                            throw new Error(`XHR error! Status: ${xhr.status}`);
+                        }
+                    } catch (xhrError) {
+                        console.warn('XMLHttpRequest also failed, using inline default game data:', xhrError);
+                        
+                        // Fallback: use inline default game data
+                        data = {
+                            "games": [
+                                {
+                                    "id": "2048",
+                                    "title": "2048 Number Blocks",
+                                    "description": "Merge number blocks to reach 2048!",
+                                    "category": "Number",
+                                    "thumbnail": "games/2048/thumbnail.jpg",
+                                    "url": "games/2048/index.html",
+                                    "featured": true,
+                                    "popular": true
+                                },
+                                {
+                                    "id": "tetris",
+                                    "title": "Tetris Classic",
+                                    "description": "Classic block stacking puzzle game",
+                                    "category": "Puzzle",
+                                    "thumbnail": "games/tetris/thumbnail.jpg",
+                                    "url": "games/tetris/index.html",
+                                    "featured": false,
+                                    "popular": true
+                                },
+                                {
+                                    "id": "snake",
+                                    "title": "Snake Game",
+                                    "description": "Control the snake to eat food and grow",
+                                    "category": "Arcade",
+                                    "thumbnail": "games/snake/thumbnail.jpg",
+                                    "url": "games/snake/index.html",
+                                    "featured": true,
+                                    "popular": false
+                                },
+                                {
+                                    "id": "entangolf",
+                                    "title": "Entangolf",
+                                    "description": "Fun golf game with a twist",
+                                    "category": "Sports",
+                                    "thumbnail": "games/entangolf/thumbnail.jpg",
+                                    "url": "games/entangolf/index.html",
+                                    "featured": false,
+                                    "popular": true
+                                },
+                                {
+                                    "id": "minesweeper",
+                                    "title": "Minesweeper",
+                                    "description": "Classic minesweeper game to test your logic and deduction skills",
+                                    "category": "Strategy",
+                                    "thumbnail": "games/minesweeper/thumbnail.jpg",
+                                    "url": "games/minesweeper/index.html",
+                                    "featured": true,
+                                    "popular": false
+                                }
+                            ]
+                        };
+                    }
+                }
+                
+                games = data.games;
+                
+                // Get game ID from URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const gameId = urlParams.get('id');
+                
+                if (gameId) {
+                    loadGame(gameId);
+                } else {
+                    document.getElementById('game-title').textContent = 'No Game Selected';
+                    document.getElementById('loading-overlay').innerHTML = `
+                        <div class="text-yellow-500 text-center p-4">
+                            <i class="fas fa-exclamation-circle text-4xl mb-2"></i>
+                            <p>No game selected</p>
+                            <p class="text-sm mt-2">Please select a game from the homepage</p>
+                        </div>
+                    `;
+                }
+                
+            } catch (error) {
+                console.error('Failed to load game config:', error);
+                document.getElementById('loading-overlay').innerHTML = `
+                    <div class="text-red-500 text-center p-4">
+                        <i class="fas fa-exclamation-triangle text-4xl mb-2"></i>
+                        <p>Failed to load game configuration</p>
+                        <p class="text-sm mt-2">${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Bind favorite button event
+            document.getElementById('favorite-btn').addEventListener('click', function() {
+                if (currentGame) {
+                    toggleFavorite(currentGame.id);
+                }
+            });
+            
+            // Setup fullscreen functionality
+            setupFullscreen();
+            
+            // Setup search functionality
+            setupSearch();
+            
+            // Load game config and game
+            loadGameConfig();
         });
     </script>
 </body>
