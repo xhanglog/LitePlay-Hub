@@ -4,6 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Play Game - LitePlay Hub</title>
+    <!-- SEO Meta Tags - Will be dynamically updated by JavaScript -->
+    <meta name="description" content="Play free online games on LitePlay Hub. No downloads or registration required. Enjoy this game and many more instantly in your browser!">
+    <meta name="keywords" content="online games, free games, browser games, HTML5 games, web games, no download games">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook - Will be dynamically updated by JavaScript -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://liteplayhub.com/game.html">
+    <meta property="og:title" content="Play Game - LitePlay Hub">
+    <meta property="og:description" content="Play free online games on LitePlay Hub. No downloads or registration required. Enjoy this game and many more instantly in your browser!">
+    <meta property="og:image" content="https://liteplayhub.com/images/og-game.jpg">
+    
+    <!-- Twitter - Will be dynamically updated by JavaScript -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://liteplayhub.com/game.html">
+    <meta property="twitter:title" content="Play Game - LitePlay Hub">
+    <meta property="twitter:description" content="Play free online games on LitePlay Hub. No downloads or registration required. Enjoy this game and many more instantly in your browser!">
+    <meta property="twitter:image" content="https://liteplayhub.com/images/twitter-game.jpg">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
@@ -245,60 +264,159 @@
             }
         }
         
-        // Load game by ID
-        function loadGame(gameId) {
-            currentGame = games.find(game => game.id === gameId);
-            
-            if (!currentGame) {
-                document.getElementById('game-title').textContent = 'Game Not Found';
-                document.getElementById('loading-overlay').innerHTML = `
-                    <div class="text-red-500 text-center p-4">
-                        <i class="fas fa-exclamation-triangle text-4xl mb-2"></i>
-                        <p>Game not found</p>
-                        <p class="text-sm mt-2">The requested game does not exist</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            // Update page title
-            document.title = `${currentGame.title} - LitePlay Hub`;
-            
-            // Update game info
-            document.getElementById('game-title').textContent = currentGame.title;
-            document.getElementById('game-category').textContent = currentGame.category;
-            document.getElementById('game-category-stats').textContent = currentGame.category;
-            document.getElementById('game-description').textContent = currentGame.description;
-            
-            // Update game stats
-            const gameStatsKey = `gameStats_${gameId}`;
-            const gameStats = JSON.parse(localStorage.getItem(gameStatsKey) || '{"playCount": 0, "lastPlayed": null}');
-            
-            document.getElementById('game-plays').textContent = gameStats.playCount || 0;
-            
-            if (gameStats.lastPlayed) {
-                document.getElementById('game-last-played').textContent = formatDate(gameStats.lastPlayed);
-            } else {
-                document.getElementById('game-last-played').textContent = 'Never';
-            }
-            
-            // Load game in iframe
-            const gameFrame = document.getElementById('game-frame');
-            gameFrame.src = currentGame.url;
-            
-            // Hide loading overlay when game is loaded
-            gameFrame.onload = function() {
-                document.getElementById('loading-overlay').style.display = 'none';
+        // Load game data
+        async function loadGameData() {
+            try {
+                // Get game ID from URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const gameId = urlParams.get('id');
                 
-                // Record game play
-                recordGamePlay(gameId);
-            };
-            
-            // Check if game is favorited
-            checkFavoriteStatus(gameId);
-            
-            // Load similar games
-            loadSimilarGames(currentGame.category, gameId);
+                if (!gameId) {
+                    window.location.href = 'index.html';
+                    return;
+                }
+                
+                // Load game data
+                let data;
+                try {
+                    // Try using fetch API (for HTTP server environment)
+                    const response = await fetch('game_config.json');
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    data = await response.json();
+                } catch (fetchError) {
+                    console.warn('Fetch API failed, trying XMLHttpRequest (for local file system):', fetchError);
+                    
+                    // Fallback: use synchronous XMLHttpRequest (for local file system)
+                    try {
+                        const xhr = new XMLHttpRequest();
+                        xhr.open('GET', 'game_config.json', false); // Synchronous request
+                        xhr.send(null);
+                        
+                        if (xhr.status === 200) {
+                            data = JSON.parse(xhr.responseText);
+                        } else {
+                            throw new Error(`XHR error! Status: ${xhr.status}`);
+                        }
+                    } catch (xhrError) {
+                        console.warn('XMLHttpRequest also failed, using inline default game data:', xhrError);
+                        
+                        // Fallback: use inline default game data
+                        data = {
+                            "games": [
+                                {
+                                    "id": "2048",
+                                    "title": "2048 Number Blocks",
+                                    "description": "Merge number blocks to reach 2048!",
+                                    "category": "Number",
+                                    "thumbnail": "games/2048/thumbnail.jpg",
+                                    "url": "games/2048/index.html",
+                                    "featured": true,
+                                    "popular": true
+                                },
+                                {
+                                    "id": "tetris",
+                                    "title": "Tetris Classic",
+                                    "description": "Classic block stacking puzzle game",
+                                    "category": "Puzzle",
+                                    "thumbnail": "games/tetris/thumbnail.jpg",
+                                    "url": "games/tetris/index.html",
+                                    "featured": false,
+                                    "popular": true
+                                },
+                                {
+                                    "id": "snake",
+                                    "title": "Snake Game",
+                                    "description": "Control the snake to eat food and grow",
+                                    "category": "Arcade",
+                                    "thumbnail": "games/snake/thumbnail.jpg",
+                                    "url": "games/snake/index.html",
+                                    "featured": true,
+                                    "popular": false
+                                },
+                                {
+                                    "id": "entangolf",
+                                    "title": "Entangolf",
+                                    "description": "Fun golf game with a twist",
+                                    "category": "Sports",
+                                    "thumbnail": "games/entangolf/thumbnail.jpg",
+                                    "url": "games/entangolf/index.html",
+                                    "featured": false,
+                                    "popular": true
+                                },
+                                {
+                                    "id": "minesweeper",
+                                    "title": "Minesweeper",
+                                    "description": "Classic minesweeper game to test your logic and deduction skills",
+                                    "category": "Strategy",
+                                    "thumbnail": "games/minesweeper/thumbnail.jpg",
+                                    "url": "games/minesweeper/index.html",
+                                    "featured": true,
+                                    "popular": false
+                                }
+                            ]
+                        };
+                    }
+                }
+                
+                games = data.games;
+                
+                // Find current game
+                currentGame = games.find(game => game.id === gameId);
+                
+                if (!currentGame) {
+                    window.location.href = 'index.html';
+                    return;
+                }
+                
+                // Update SEO meta tags
+                document.title = `${currentGame.title} - LitePlay Hub`;
+                document.querySelector('meta[name="description"]').setAttribute('content', `Play ${currentGame.title} online for free on LitePlay Hub. ${currentGame.description} No downloads or registration required.`);
+                document.querySelector('meta[name="keywords"]').setAttribute('content', `${currentGame.title}, ${currentGame.category} games, online games, free games, browser games, HTML5 games`);
+                
+                // Update Open Graph tags
+                document.querySelector('meta[property="og:title"]').setAttribute('content', `${currentGame.title} - LitePlay Hub`);
+                document.querySelector('meta[property="og:description"]').setAttribute('content', `Play ${currentGame.title} online for free on LitePlay Hub. ${currentGame.description}`);
+                document.querySelector('meta[property="og:url"]').setAttribute('content', `https://liteplayhub.com/game.html?id=${currentGame.id}`);
+                document.querySelector('meta[property="og:image"]').setAttribute('content', `https://liteplayhub.com/${currentGame.thumbnail}`);
+                
+                // Update Twitter tags
+                document.querySelector('meta[property="twitter:title"]').setAttribute('content', `${currentGame.title} - LitePlay Hub`);
+                document.querySelector('meta[property="twitter:description"]').setAttribute('content', `Play ${currentGame.title} online for free on LitePlay Hub. ${currentGame.description}`);
+                document.querySelector('meta[property="twitter:url"]').setAttribute('content', `https://liteplayhub.com/game.html?id=${currentGame.id}`);
+                document.querySelector('meta[property="twitter:image"]').setAttribute('content', `https://liteplayhub.com/${currentGame.thumbnail}`);
+                
+                // Update game information
+                document.getElementById('game-title').textContent = currentGame.title;
+                document.getElementById('game-category').textContent = currentGame.category;
+                document.getElementById('game-description').textContent = currentGame.description;
+                document.getElementById('game-category-stats').textContent = currentGame.category;
+                
+                // Load game in iframe
+                const gameFrame = document.getElementById('game-frame');
+                gameFrame.src = currentGame.url;
+                
+                // Remove loading overlay when game is loaded
+                gameFrame.onload = function() {
+                    document.getElementById('loading-overlay').style.display = 'none';
+                };
+                
+                // Update favorite button
+                updateFavoriteButton();
+                
+                // Record play
+                recordGamePlay();
+                
+                // Load similar games
+                loadSimilarGames();
+                
+                // Setup search functionality
+                setupSearch();
+                
+            } catch (error) {
+                console.error('Failed to load game data:', error);
+            }
         }
         
         // Check favorite status
@@ -442,123 +560,6 @@
             });
         }
         
-        // Load game config
-        async function loadGameConfig() {
-            try {
-                let data;
-                try {
-                    // Try using fetch API (for HTTP server environment)
-                    const response = await fetch('game_config.json');
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! Status: ${response.status}`);
-                    }
-                    data = await response.json();
-                } catch (fetchError) {
-                    console.warn('Fetch API failed, trying XMLHttpRequest (for local file system):', fetchError);
-                    
-                    // Fallback: use synchronous XMLHttpRequest (for local file system)
-                    try {
-                        const xhr = new XMLHttpRequest();
-                        xhr.open('GET', 'game_config.json', false); // Synchronous request
-                        xhr.send(null);
-                        
-                        if (xhr.status === 200) {
-                            data = JSON.parse(xhr.responseText);
-                        } else {
-                            throw new Error(`XHR error! Status: ${xhr.status}`);
-                        }
-                    } catch (xhrError) {
-                        console.warn('XMLHttpRequest also failed, using inline default game data:', xhrError);
-                        
-                        // Fallback: use inline default game data
-                        data = {
-                            "games": [
-                                {
-                                    "id": "2048",
-                                    "title": "2048 Number Blocks",
-                                    "description": "Merge number blocks to reach 2048!",
-                                    "category": "Number",
-                                    "thumbnail": "games/2048/thumbnail.jpg",
-                                    "url": "games/2048/index.html",
-                                    "featured": true,
-                                    "popular": true
-                                },
-                                {
-                                    "id": "tetris",
-                                    "title": "Tetris Classic",
-                                    "description": "Classic block stacking puzzle game",
-                                    "category": "Puzzle",
-                                    "thumbnail": "games/tetris/thumbnail.jpg",
-                                    "url": "games/tetris/index.html",
-                                    "featured": false,
-                                    "popular": true
-                                },
-                                {
-                                    "id": "snake",
-                                    "title": "Snake Game",
-                                    "description": "Control the snake to eat food and grow",
-                                    "category": "Arcade",
-                                    "thumbnail": "games/snake/thumbnail.jpg",
-                                    "url": "games/snake/index.html",
-                                    "featured": true,
-                                    "popular": false
-                                },
-                                {
-                                    "id": "entangolf",
-                                    "title": "Entangolf",
-                                    "description": "Fun golf game with a twist",
-                                    "category": "Sports",
-                                    "thumbnail": "games/entangolf/thumbnail.jpg",
-                                    "url": "games/entangolf/index.html",
-                                    "featured": false,
-                                    "popular": true
-                                },
-                                {
-                                    "id": "minesweeper",
-                                    "title": "Minesweeper",
-                                    "description": "Classic minesweeper game to test your logic and deduction skills",
-                                    "category": "Strategy",
-                                    "thumbnail": "games/minesweeper/thumbnail.jpg",
-                                    "url": "games/minesweeper/index.html",
-                                    "featured": true,
-                                    "popular": false
-                                }
-                            ]
-                        };
-                    }
-                }
-                
-                games = data.games;
-                
-                // Get game ID from URL
-                const urlParams = new URLSearchParams(window.location.search);
-                const gameId = urlParams.get('id');
-                
-                if (gameId) {
-                    loadGame(gameId);
-                } else {
-                    document.getElementById('game-title').textContent = 'No Game Selected';
-                    document.getElementById('loading-overlay').innerHTML = `
-                        <div class="text-yellow-500 text-center p-4">
-                            <i class="fas fa-exclamation-circle text-4xl mb-2"></i>
-                            <p>No game selected</p>
-                            <p class="text-sm mt-2">Please select a game from the homepage</p>
-                        </div>
-                    `;
-                }
-                
-            } catch (error) {
-                console.error('Failed to load game config:', error);
-                document.getElementById('loading-overlay').innerHTML = `
-                    <div class="text-red-500 text-center p-4">
-                        <i class="fas fa-exclamation-triangle text-4xl mb-2"></i>
-                        <p>Failed to load game configuration</p>
-                        <p class="text-sm mt-2">${error.message}</p>
-                    </div>
-                `;
-            }
-        }
-        
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
             // Bind favorite button event
@@ -574,8 +575,8 @@
             // Setup search functionality
             setupSearch();
             
-            // Load game config and game
-            loadGameConfig();
+            // Load game data
+            loadGameData();
         });
     </script>
 </body>

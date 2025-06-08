@@ -4,6 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LitePlay Hub - Play Web Games Instantly</title>
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Play free online games instantly on LitePlay Hub. No downloads, no registration required. Enjoy hundreds of HTML5 games including puzzle, arcade, strategy and more!">
+    <meta name="keywords" content="online games, free games, browser games, HTML5 games, web games, no download games, puzzle games, arcade games, strategy games">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://liteplayhub.com/">
+    <meta property="og:title" content="LitePlay Hub - Play Web Games Instantly">
+    <meta property="og:description" content="Play free online games instantly on LitePlay Hub. No downloads, no registration required. Enjoy hundreds of HTML5 games!">
+    <meta property="og:image" content="https://liteplayhub.com/images/og-image.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://liteplayhub.com/">
+    <meta property="twitter:title" content="LitePlay Hub - Play Web Games Instantly">
+    <meta property="twitter:description" content="Play free online games instantly on LitePlay Hub. No downloads, no registration required. Enjoy hundreds of HTML5 games!">
+    <meta property="twitter:image" content="https://liteplayhub.com/images/twitter-image.jpg">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
@@ -363,7 +382,7 @@
                 favorites.push(gameId);
                 button.innerHTML = '<i class="fas fa-heart"></i>';
                 button.classList.add('text-red-500');
-        } else {
+            } else {
                 // Remove from favorites
                 favorites.splice(index, 1);
                 button.innerHTML = '<i class="far fa-heart"></i>';
