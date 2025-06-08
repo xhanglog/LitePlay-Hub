@@ -1,0 +1,134 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.game-container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 500px;
+    width: 100%;
+}
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+h1 {
+    color: #333;
+    font-size: 24px;
+}
+
+.score-container {
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+canvas {
+    display: block;
+    background-color: #e0e0e0;
+    margin: 0 auto;
+    border: 2px solid #333;
+    max-width: 100%;
+    height: auto;
+}
+
+.controls {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#startBtn, #pauseBtn {
+    width: 120px;
+    margin: 0 5px;
+}
+
+.mobile-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.horizontal-controls {
+    display: flex;
+    gap: 20px;
+    margin: 10px 0;
+}
+
+.mobile-controls button {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-info {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+}
+
+.game-info h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.game-info p {
+    color: #666;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    .mobile-controls {
+        display: none;
+    }
+}
+
+@media (max-width: 767px) {
+    canvas {
+        width: 300px;
+        height: 300px;
+    }
+} 

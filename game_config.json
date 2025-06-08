@@ -1,0 +1,54 @@
+{
+  "games": [
+    {
+      "id": "2048",
+      "title": "2048 Number Blocks",
+      "description": "合并数字方块，达到2048！",
+      "category": "Number",
+      "thumbnail": "images/games/2048.jpg",
+      "url": "games/2048/index.html",
+      "featured": true,
+      "popular": true
+    },
+    {
+      "id": "tetris",
+      "title": "Tetris Classic",
+      "description": "经典俄罗斯方块游戏",
+      "category": "Puzzle",
+      "thumbnail": "images/games/tetris.jpg",
+      "url": "games/tetris/index.html",
+      "featured": false,
+      "popular": true
+    },
+    {
+      "id": "snake",
+      "title": "Snake Game",
+      "description": "控制蛇吃食物并成长",
+      "category": "Arcade",
+      "thumbnail": "images/games/snake.jpg",
+      "url": "games/snake/index.html",
+      "featured": true,
+      "popular": false
+    },
+    {
+      "id": "entangolf",
+      "title": "Entangolf",
+      "description": "有趣的高尔夫游戏",
+      "category": "Sports",
+      "thumbnail": "images/games/entangolf.jpg",
+      "url": "games/entangolf/index.html",
+      "featured": false,
+      "popular": true
+    },
+    {
+      "id": "minesweeper",
+      "title": "趣味扫雷",
+      "description": "经典的扫雷游戏，考验你的逻辑思维和推理能力",
+      "category": "Strategy",
+      "thumbnail": "images/games/minesweeper.jpg",
+      "url": "games/minesweeper/index.html",
+      "featured": false,
+      "popular": false
+    }
+  ]
+} 

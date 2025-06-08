@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>搜索结果 - 轻游空间 (LitePlay Hub)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                        accent: '#F59E0B',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .game-card {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .game-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-6 max-w-7xl">
+        <!-- 导航栏 -->
+        <nav class="flex flex-col md:flex-row justify-between items-center py-4 border-b border-gray-200 dark:border-gray-700 mb-6">
+            <div class="flex items-center mb-4 md:mb-0">
+                <a href="index.html" class="text-primary text-2xl font-bold flex items-center">
+                    <i class="fas fa-gamepad mr-2"></i>
+                    <span>轻游空间</span>
+                    <span class="text-sm text-gray-500 dark:text-gray-400 ml-2">LitePlay Hub</span>
+                </a>
+            </div>
+            
+            <div class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4 w-full md:w-auto">
+                <!-- 搜索框 -->
+                <div class="relative w-full md:w-64">
+                    <input type="text" placeholder="搜索游戏..." value="方块" class="w-full pl-10 pr-4 py-2 rounded-full bg-gray-100 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary">
+                    <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                </div>
+                
+                <!-- 导航链接 -->
+                <div class="flex space-x-4">
+                    <a href="categories.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary">
+                        <i class="fas fa-th-large mr-1"></i>
+                        <span>分类</span>
+                    </a>
+                    <a href="recent.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary">
+                        <i class="fas fa-history mr-1"></i>
+                        <span>最近</span>
+                    </a>
+                    <a href="favorites.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary">
+                        <i class="fas fa-heart mr-1"></i>
+                        <span>收藏</span>
+                    </a>
+                    <button id="theme-toggle" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- 主要内容 -->
+        <main>
+            <!-- 搜索结果标题 -->
+            <div class="mb-6">
+                <h1 class="text-2xl font-bold">搜索结果: "方块"</h1>
+                <p class="text-gray-600 dark:text-gray-400 mt-1">找到 2 个相关游戏</p>
+            </div>
+            
+            <!-- 搜索过滤器 -->
+            <div class="mb-6 flex flex-wrap gap-3">
+                <div class="text-gray-600 dark:text-gray-400 flex items-center">
+                    <span class="mr-2">筛选:</span>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <button class="bg-primary text-white px-3 py-1 rounded-full text-sm">全部</button>
+                    <button class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 py-1 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-600">益智</button>
+                    <button class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 py-1 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-600">数字</button>
+                </div>
+            </div>
+            
+            <!-- 搜索结果列表 -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- 搜索结果1 -->
+                <div class="game-card bg-white dark:bg-gray-700 rounded-lg overflow-hidden shadow-md">
+                    <img src="https://images.unsplash.com/photo-1614680376739-414d95ff43df?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="2048" class="w-full h-40 object-cover">
+                    <!-- 图片来源: https://unsplash.com/photos/person-playing-chess-on-brown-wooden-chess-board-b59_9qLRh_0 -->
+                    <div class="p-4">
+                        <div class="flex justify-between items-start">
+                            <h3 class="font-semibold text-lg">
+                                <span class="bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200 px-1 rounded">2048</span>
+                                <span>数字方块</span>
+                            </h3>
+                            <span class="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 text-xs px-2 py-1 rounded-full">数字</span>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm mt-2">合并相同数字，挑战2048！简单上手但充满策略性。</p>
+                        <div class="mt-4 flex justify-between items-center">
+                            <a href="game.html" class="bg-primary hover:bg-blue-600 text-white px-4 py-2 rounded-md text-sm">开始游戏</a>
+                            <button class="text-gray-400 hover:text-red-500 dark:hover:text-red-400">
+                                <i class="far fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 搜索结果2 -->
+                <div class="game-card bg-white dark:bg-gray-700 rounded-lg overflow-hidden shadow-md">
+                    <img src="https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="俄罗斯方块" class="w-full h-40 object-cover">
+                    <!-- 图片来源: https://unsplash.com/photos/person-playing-game-boy-advance-sp-t1PaIbMTJIM -->
+                    <div class="p-4">
+                        <div class="flex justify-between items-start">
+                            <h3 class="font-semibold text-lg">
+                                <span class="bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200 px-1 rounded">经典</span>
+                                <span>俄罗斯方块</span>
+                            </h3>
+                            <span class="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 text-xs px-2 py-1 rounded-full">益智</span>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm mt-2">经典的俄罗斯方块游戏，考验你的反应和策略。</p>
+                        <div class="mt-4 flex justify-between items-center">
+                            <a href="game.html" class="bg-primary hover:bg-blue-600 text-white px-4 py-2 rounded-md text-sm">开始游戏</a>
+                            <button class="text-red-500">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 无搜索结果时的空状态 (默认隐藏) -->
+            <div class="hidden text-center py-16">
+                <div class="text-gray-400 dark:text-gray-500 text-6xl mb-4">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h3 class="text-xl font-medium mb-2">未找到相关游戏</h3>
+                <p class="text-gray-500 dark:text-gray-400 mb-6">尝试使用其他关键词搜索</p>
+                <a href="index.html" class="bg-primary hover:bg-blue-600 text-white px-6 py-2 rounded-md inline-block">
+                    返回首页
+                </a>
+            </div>
+        </main>
+        
+        <!-- 页脚 -->
+        <footer class="mt-12 pt-6 border-t border-gray-200 dark:border-gray-700 text-center text-gray-500 dark:text-gray-400 text-sm">
+            <div class="mb-4">
+                <a href="#" class="mx-2 hover:text-primary">关于我们</a>
+                <a href="#" class="mx-2 hover:text-primary">反馈建议</a>
+                <a href="#" class="mx-2 hover:text-primary">隐私政策</a>
+            </div>
+            <p>© 2024 轻游空间 (LitePlay Hub) - 纯前端Web小游戏平台，无需注册，即点即玩</p>
+        </footer>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // 主题切换
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
+        
+        themeToggleBtn.addEventListener('click', function() {
+            if (htmlElement.classList.contains('dark')) {
+                htmlElement.classList.remove('dark');
+                themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+                localStorage.setItem('theme', 'light');
+            } else {
+                htmlElement.classList.add('dark');
+                themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+        
+        // 检查本地存储的主题
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            htmlElement.classList.remove('dark');
+            themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+    </script>
+</body>
+</html> 

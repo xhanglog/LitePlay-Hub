@@ -1,0 +1,322 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background: #faf8ef;
+    color: #776e65;
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 18px;
+}
+
+.container {
+    width: 500px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+h1 {
+    font-size: 80px;
+    font-weight: bold;
+    margin: 0;
+    display: block;
+    float: left;
+}
+
+.scores-container {
+    float: right;
+    text-align: right;
+}
+
+.score-container, .best-container {
+    position: relative;
+    display: inline-block;
+    background: #bbada0;
+    padding: 15px 25px;
+    font-size: 25px;
+    height: 25px;
+    line-height: 47px;
+    font-weight: bold;
+    border-radius: 3px;
+    color: white;
+    margin-top: 8px;
+    text-align: center;
+}
+
+.score-container {
+    margin-right: 5px;
+}
+
+.score-title {
+    position: absolute;
+    top: -10px;
+    left: 0;
+    right: 0;
+    font-size: 13px;
+    line-height: 13px;
+    text-align: center;
+    color: #eee4da;
+}
+
+.above-game {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.game-intro {
+    line-height: 1.65;
+    margin: 0;
+    float: left;
+    font-weight: bold;
+}
+
+.restart-button {
+    background: #8f7a66;
+    border-radius: 3px;
+    padding: 0 20px;
+    text-decoration: none;
+    color: #f9f6f2;
+    height: 40px;
+    line-height: 42px;
+    display: block;
+    text-align: center;
+    float: right;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.game-container {
+    margin-top: 40px;
+    position: relative;
+    padding: 15px;
+    cursor: default;
+    -webkit-touch-callout: none;
+    -ms-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background: #bbada0;
+    border-radius: 6px;
+    width: 500px;
+    height: 500px;
+    box-sizing: border-box;
+}
+
+.game-message {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(238, 228, 218, 0.5);
+    z-index: 100;
+    text-align: center;
+    animation: fade-in 800ms ease 1200ms;
+    animation-fill-mode: both;
+}
+
+.game-message p {
+    font-size: 60px;
+    font-weight: bold;
+    height: 60px;
+    line-height: 60px;
+    margin-top: 222px;
+}
+
+.game-message.game-won {
+    background: rgba(237, 194, 46, 0.5);
+    color: #f9f6f2;
+}
+
+.game-message.game-won, .game-message.game-over {
+    display: block;
+}
+
+.retry-button {
+    background: #8f7a66;
+    border-radius: 3px;
+    padding: 0 20px;
+    text-decoration: none;
+    color: #f9f6f2;
+    height: 40px;
+    line-height: 42px;
+    display: inline-block;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+.grid-container {
+    position: absolute;
+    z-index: 1;
+}
+
+.grid-row {
+    margin-bottom: 15px;
+}
+
+.grid-row:last-child {
+    margin-bottom: 0;
+}
+
+.grid-row:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.grid-cell {
+    width: 106.25px;
+    height: 106.25px;
+    margin-right: 15px;
+    float: left;
+    border-radius: 3px;
+    background: rgba(238, 228, 218, 0.35);
+}
+
+.grid-cell:last-child {
+    margin-right: 0;
+}
+
+.tile-container {
+    position: absolute;
+    z-index: 2;
+}
+
+.tile {
+    width: 106.25px;
+    height: 106.25px;
+    line-height: 106.25px;
+    position: absolute;
+    border-radius: 3px;
+    background: #eee4da;
+    text-align: center;
+    font-weight: bold;
+    z-index: 10;
+    font-size: 55px;
+    transition: 100ms ease-in-out;
+    transition-property: transform;
+}
+
+.tile.tile-2 {
+    background: #eee4da;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0), inset 0 0 0 1px rgba(255, 255, 255, 0);
+}
+
+.tile.tile-4 {
+    background: #ede0c8;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0), inset 0 0 0 1px rgba(255, 255, 255, 0);
+}
+
+.tile.tile-8 {
+    color: #f9f6f2;
+    background: #f2b179;
+}
+
+.tile.tile-16 {
+    color: #f9f6f2;
+    background: #f59563;
+}
+
+.tile.tile-32 {
+    color: #f9f6f2;
+    background: #f67c5f;
+}
+
+.tile.tile-64 {
+    color: #f9f6f2;
+    background: #f65e3b;
+}
+
+.tile.tile-128 {
+    color: #f9f6f2;
+    background: #edcf72;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.2381), inset 0 0 0 1px rgba(255, 255, 255, 0.14286);
+    font-size: 45px;
+}
+
+.tile.tile-256 {
+    color: #f9f6f2;
+    background: #edcc61;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.31746), inset 0 0 0 1px rgba(255, 255, 255, 0.19048);
+    font-size: 45px;
+}
+
+.tile.tile-512 {
+    color: #f9f6f2;
+    background: #edc850;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.39683), inset 0 0 0 1px rgba(255, 255, 255, 0.2381);
+    font-size: 45px;
+}
+
+.tile.tile-1024 {
+    color: #f9f6f2;
+    background: #edc53f;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.47619), inset 0 0 0 1px rgba(255, 255, 255, 0.28571);
+    font-size: 35px;
+}
+
+.tile.tile-2048 {
+    color: #f9f6f2;
+    background: #edc22e;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.55556), inset 0 0 0 1px rgba(255, 255, 255, 0.33333);
+    font-size: 35px;
+}
+
+.game-explanation {
+    margin-top: 50px;
+}
+
+@media screen and (max-width: 520px) {
+    .container {
+        width: 280px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    h1 {
+        font-size: 40px;
+    }
+
+    .score-container, .best-container {
+        padding: 10px 15px;
+        font-size: 18px;
+        height: 20px;
+        line-height: 37px;
+    }
+
+    .game-container {
+        width: 280px;
+        height: 280px;
+    }
+
+    .grid-cell {
+        width: 56.25px;
+        height: 56.25px;
+        margin-right: 10px;
+    }
+
+    .tile {
+        width: 56.25px;
+        height: 56.25px;
+        line-height: 56.25px;
+        font-size: 30px;
+    }
+
+    .tile.tile-128, .tile.tile-256, .tile.tile-512 {
+        font-size: 25px;
+    }
+
+    .tile.tile-1024, .tile.tile-2048 {
+        font-size: 20px;
+    }
+} 

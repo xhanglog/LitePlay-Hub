@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>游戏加载中... - LitePlay Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                        accent: '#F59E0B',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .game-frame {
+            width: 100%;
+            height: calc(100vh - 120px);
+            min-height: 500px;
+            background-color: #f9fafb;
+        }
+        .dark .game-frame {
+            background-color: #1f2937;
+        }
+        .control-bar {
+            transition: opacity 0.3s;
+        }
+        .control-bar:hover {
+            opacity: 1 !important;
+        }
+    </style>
+</head>
+<body class="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-4 max-w-7xl">
+        <!-- Game Header Info -->
+        <div class="p-4 flex justify-between items-center border-b border-gray-200 dark:border-gray-700">
+            <div class="flex items-center">
+                <a href="index.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary mr-4">
+                    <i class="fas fa-arrow-left"></i>
+                    <span class="ml-2">Back to Home</span>
+                </a>
+                <h1 id="game-title" class="text-xl font-bold">加载中...</h1>
+                <span id="game-category" class="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 text-xs px-2 py-1 rounded-full ml-3">...</span>
+            </div>
+            <div class="flex items-center">
+                <button id="theme-toggle" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary p-2">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Game Area -->
+        <div class="relative">
+            <!-- Loading Indicator -->
+            <div id="loading" class="absolute inset-0 flex flex-col items-center justify-center bg-white dark:bg-gray-800 z-10">
+                <div class="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mb-4"></div>
+                <p class="text-lg">Loading game...</p>
+            </div>
+            
+            <!-- Game iframe -->
+            <div id="game-container" class="game-frame">
+                <!-- 游戏将通过iframe动态加载 -->
+                <iframe id="game-iframe" class="w-full h-full border-0" frameborder="0" allowfullscreen></iframe>
+            </div>
+            
+            <!-- Game Control Bar -->
+            <div class="control-bar absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 dark:bg-opacity-70 text-white p-3 flex justify-between items-center opacity-80">
+                <div class="flex items-center space-x-4">
+                    <button id="fullscreen-btn" class="hover:text-primary transition">
+                        <i class="fas fa-expand"></i>
+                        <span class="ml-1 hidden sm:inline">Fullscreen</span>
+                    </button>
+                    <button id="sound-btn" class="hover:text-primary transition">
+                        <i class="fas fa-volume-up"></i>
+                        <span class="ml-1 hidden sm:inline">Sound</span>
+                    </button>
+                    <button id="restart-btn" class="hover:text-primary transition">
+                        <i class="fas fa-redo"></i>
+                        <span class="ml-1 hidden sm:inline">Restart</span>
+                    </button>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button id="favorite-btn" class="hover:text-red-400 transition">
+                        <i class="far fa-heart"></i>
+                        <span class="ml-1 hidden sm:inline">Favorite</span>
+                    </button>
+                    <a href="index.html" class="hover:text-primary transition">
+                        <i class="fas fa-times"></i>
+                        <span class="ml-1 hidden sm:inline">Exit Game</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // 从URL获取游戏ID
+        const urlParams = new URLSearchParams(window.location.search);
+        const gameId = urlParams.get('id') || '2048'; // 默认为2048游戏
+        
+        // 从game_config.json加载游戏配置
+        async function loadGameConfig() {
+            try {
+                let data;
+                try {
+                    // 尝试使用fetch API (适用于HTTP服务器环境)
+                    const response = await fetch('game_config.json');
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    data = await response.json();
+                } catch (fetchError) {
+                    console.warn('Fetch API失败，尝试使用XMLHttpRequest (适用于本地文件系统):', fetchError);
+                    
+                    // 备用方案：使用同步XMLHttpRequest (适用于本地文件系统)
+                    try {
+                        const xhr = new XMLHttpRequest();
+                        xhr.open('GET', 'game_config.json', false); // 同步请求
+                        xhr.send(null);
+                        
+                        if (xhr.status === 200) {
+                            data = JSON.parse(xhr.responseText);
+                        } else {
+                            throw new Error(`XHR error! Status: ${xhr.status}`);
+                        }
+                    } catch (xhrError) {
+                        console.warn('XMLHttpRequest也失败，使用内联的默认游戏数据:', xhrError);
+                        
+                        // 备用方案：使用内联的默认游戏数据
+                        data = {
+                            "games": [
+                                {
+                                    "id": "2048",
+                                    "title": "2048 Number Blocks",
+                                    "description": "合并数字方块，达到2048！",
+                                    "category": "Number",
+                                    "thumbnail": "images/games/2048.jpg",
+                                    "url": "games/2048/index.html",
+                                    "featured": true,
+                                    "popular": true
+                                },
+                                {
+                                    "id": "snake",
+                                    "title": "Snake Game",
+                                    "description": "控制蛇吃食物并成长",
+                                    "category": "Arcade",
+                                    "thumbnail": "images/games/snake.jpg",
+                                    "url": "games/snake/index.html",
+                                    "featured": true,
+                                    "popular": false
+                                },
+                                {
+                                    "id": "entangolf",
+                                    "title": "Entangolf",
+                                    "description": "有趣的高尔夫游戏",
+                                    "category": "Sports",
+                                    "thumbnail": "images/games/entangolf.jpg",
+                                    "url": "games/entangolf/index.html",
+                                    "featured": false,
+                                    "popular": true
+                                },
+                                {
+                                    "id": "minesweeper",
+                                    "title": "趣味扫雷",
+                                    "description": "经典的扫雷游戏，考验你的逻辑思维和推理能力",
+                                    "category": "Strategy",
+                                    "thumbnail": "images/games/minesweeper.jpg",
+                                    "url": "games/minesweeper/index.html",
+                                    "featured": false,
+                                    "popular": false
+                                }
+                            ]
+                        };
+                    }
+                }
+                return data;
+            } catch (error) {
+                console.error('加载游戏配置失败:', error);
+                document.getElementById('loading').innerHTML = `
+                    <div class="text-red-500 text-center p-4">
+                        <i class="fas fa-exclamation-triangle text-4xl mb-2"></i>
+                        <p>加载游戏配置失败</p>
+                        <p class="text-sm mt-2">${error.message}</p>
+                        <a href="index.html" class="mt-4 inline-block bg-primary text-white px-4 py-2 rounded">返回首页</a>
+                    </div>
+                `;
+                return null;
+            }
+        }
+        
+        // 加载并显示游戏
+        async function initGame() {
+            const config = await loadGameConfig();
+            if (!config) return;
+            
+            const game = config.games.find(g => g.id === gameId);
+            
+            if (!game) {
+                document.getElementById('loading').innerHTML = `
+                    <div class="text-red-500 text-center p-4">
+                        <i class="fas fa-exclamation-triangle text-4xl mb-2"></i>
+                        <p>未找到游戏</p>
+                        <a href="index.html" class="mt-4 inline-block bg-primary text-white px-4 py-2 rounded">返回首页</a>
+                    </div>
+                `;
+                return;
+            }
+            
+            // 更新页面标题和游戏信息
+            document.title = `${game.title} - LitePlay Hub`;
+            document.getElementById('game-title').textContent = game.title;
+            document.getElementById('game-category').textContent = game.category;
+            
+            // 设置iframe源
+            const iframe = document.getElementById('game-iframe');
+            iframe.src = game.url;
+            
+            // 监听iframe加载完成
+            iframe.onload = function() {
+                document.getElementById('loading').style.display = 'none';
+            };
+            
+            // 监听iframe加载错误
+            iframe.onerror = function() {
+                document.getElementById('loading').innerHTML = `
+                    <div class="text-red-500 text-center p-4">
+                        <i class="fas fa-exclamation-triangle text-4xl mb-2"></i>
+                        <p>游戏加载失败</p>
+                        <p class="text-sm mt-2">无法加载游戏: ${game.title}</p>
+                        <a href="index.html" class="mt-4 inline-block bg-primary text-white px-4 py-2 rounded">返回首页</a>
+                    </div>
+                `;
+            };
+            
+            // 如果iframe加载超时（10秒），也隐藏加载动画
+            setTimeout(() => {
+                document.getElementById('loading').style.display = 'none';
+            }, 10000);
+        }
+        
+        // 初始化游戏
+        initGame();
+        
+        // Theme toggle
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
+        
+        themeToggleBtn.addEventListener('click', function() {
+            if (htmlElement.classList.contains('dark')) {
+                htmlElement.classList.remove('dark');
+                themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+                localStorage.setItem('theme', 'light');
+            } else {
+                htmlElement.classList.add('dark');
+                themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+        
+        // Check saved theme
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            htmlElement.classList.remove('dark');
+            themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        
+        // Fullscreen button
+        const fullscreenBtn = document.getElementById('fullscreen-btn');
+        const gameContainer = document.getElementById('game-container');
+        
+        fullscreenBtn.addEventListener('click', function() {
+            if (!document.fullscreenElement) {
+                gameContainer.requestFullscreen().catch(err => {
+                    alert(`Fullscreen error: ${err.message}`);
+                });
+                fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i><span class="ml-1 hidden sm:inline">Exit Fullscreen</span>';
+            } else {
+                document.exitFullscreen();
+                fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i><span class="ml-1 hidden sm:inline">Fullscreen</span>';
+            }
+        });
+        
+        // Sound button
+        const soundBtn = document.getElementById('sound-btn');
+        let soundOn = true;
+        
+        soundBtn.addEventListener('click', function() {
+            soundOn = !soundOn;
+            if (soundOn) {
+                soundBtn.innerHTML = '<i class="fas fa-volume-up"></i><span class="ml-1 hidden sm:inline">Sound</span>';
+                // 这里可以添加控制iframe中游戏声音的代码，但需要游戏支持postMessage API
+            } else {
+                soundBtn.innerHTML = '<i class="fas fa-volume-mute"></i><span class="ml-1 hidden sm:inline">Sound</span>';
+                // 这里可以添加控制iframe中游戏声音的代码，但需要游戏支持postMessage API
+            }
+        });
+        
+        // Favorite button
+        const favoriteBtn = document.getElementById('favorite-btn');
+        let isFavorite = false;
+        
+        favoriteBtn.addEventListener('click', function() {
+            isFavorite = !isFavorite;
+            if (isFavorite) {
+                favoriteBtn.innerHTML = '<i class="fas fa-heart"></i><span class="ml-1 hidden sm:inline">Favorited</span>';
+                favoriteBtn.classList.add('text-red-500');
+                
+                // 保存收藏到本地存储
+                const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+                if (!favorites.includes(gameId)) {
+                    favorites.push(gameId);
+                    localStorage.setItem('favorites', JSON.stringify(favorites));
+                }
+            } else {
+                favoriteBtn.innerHTML = '<i class="far fa-heart"></i><span class="ml-1 hidden sm:inline">Favorite</span>';
+                favoriteBtn.classList.remove('text-red-500');
+                
+                // 从本地存储中移除收藏
+                const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+                const index = favorites.indexOf(gameId);
+                if (index > -1) {
+                    favorites.splice(index, 1);
+                    localStorage.setItem('favorites', JSON.stringify(favorites));
+                }
+            }
+        });
+        
+        // 检查游戏是否已收藏
+        function checkFavoriteStatus() {
+            const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+            if (favorites.includes(gameId)) {
+                isFavorite = true;
+                favoriteBtn.innerHTML = '<i class="fas fa-heart"></i><span class="ml-1 hidden sm:inline">Favorited</span>';
+                favoriteBtn.classList.add('text-red-500');
+            }
+        }
+        
+        // 页面加载完成后检查收藏状态
+        window.addEventListener('DOMContentLoaded', checkFavoriteStatus);
+        
+        // 重启游戏按钮
+        document.getElementById('restart-btn').addEventListener('click', function() {
+            const iframe = document.getElementById('game-iframe');
+            iframe.src = iframe.src;
+            document.getElementById('loading').style.display = 'flex';
+        });
+    </script>
+</body>
+</html>

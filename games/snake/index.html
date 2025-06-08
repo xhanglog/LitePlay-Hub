@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>贪吃蛇 - LitePlay Hub</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-header">
+            <h1>贪吃蛇</h1>
+            <div class="score-container">
+                分数: <span id="score">0</span>
+            </div>
+        </div>
+        
+        <canvas id="gameCanvas" width="400" height="400"></canvas>
+        
+        <div class="controls">
+            <button id="startBtn">开始游戏</button>
+            <button id="pauseBtn">暂停</button>
+            <div class="mobile-controls">
+                <button id="upBtn">↑</button>
+                <div class="horizontal-controls">
+                    <button id="leftBtn">←</button>
+                    <button id="rightBtn">→</button>
+                </div>
+                <button id="downBtn">↓</button>
+            </div>
+        </div>
+        
+        <div class="game-info">
+            <h2>游戏说明</h2>
+            <p>使用键盘方向键或屏幕按钮控制蛇的移动方向。</p>
+            <p>吃到食物可以增加分数和蛇的长度。</p>
+            <p>撞到墙壁或自己的身体游戏结束。</p>
+        </div>
+    </div>
+    
+    <script src="snake.js"></script>
+</body>
+</html> 
