@@ -3,7 +3,7 @@
     {
       "id": "2048",
       "title": "2048 Number Blocks",
-      "description": "合并数字方块，达到2048！",
+      "description": "Merge number blocks to reach 2048!",
       "category": "Number",
       "thumbnail": "games/2048/thumbnail.jpg",
       "url": "games/2048/index.html",
@@ -13,7 +13,7 @@
     {
       "id": "tetris",
       "title": "Tetris Classic",
-      "description": "经典俄罗斯方块游戏",
+      "description": "Classic block stacking puzzle game",
       "category": "Puzzle",
       "thumbnail": "games/tetris/thumbnail.jpg",
       "url": "games/tetris/index.html",
@@ -23,7 +23,7 @@
     {
       "id": "snake",
       "title": "Snake Game",
-      "description": "控制蛇吃食物并成长",
+      "description": "Control the snake to eat food and grow",
       "category": "Arcade",
       "thumbnail": "games/snake/thumbnail.jpg",
       "url": "games/snake/index.html",
@@ -33,7 +33,7 @@
     {
       "id": "entangolf",
       "title": "Entangolf",
-      "description": "有趣的高尔夫游戏",
+      "description": "Fun golf game with a twist",
       "category": "Sports",
       "thumbnail": "games/entangolf/thumbnail.jpg",
       "url": "games/entangolf/index.html",
@@ -42,8 +42,8 @@
     },
     {
       "id": "minesweeper",
-      "title": "趣味扫雷",
-      "description": "经典的扫雷游戏，考验你的逻辑思维和推理能力",
+      "title": "Minesweeper",
+      "description": "Classic minesweeper game to test your logic and deduction skills",
       "category": "Strategy",
       "thumbnail": "games/minesweeper/thumbnail.jpg",
       "url": "games/minesweeper/index.html",

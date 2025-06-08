@@ -363,7 +363,7 @@
                 favorites.push(gameId);
                 button.innerHTML = '<i class="fas fa-heart"></i>';
                 button.classList.add('text-red-500');
-            } else {
+        } else {
                 // Remove from favorites
                 favorites.splice(index, 1);
                 button.innerHTML = '<i class="far fa-heart"></i>';
@@ -405,7 +405,7 @@
             
             localStorage.setItem('recentlyPlayed', JSON.stringify(recentGames));
         }
-
+        
         // Implement search functionality
         function setupSearch() {
             const searchInput = document.getElementById('search-input');
